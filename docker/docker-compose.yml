@@ -1,0 +1,99 @@
+services:
+
+  indy-pool:
+    image: bcgovimages/von-network:latest
+    container_name: indy-pool
+    ports:
+      - "9701-9708:9701-9708"
+      - "9000:9000"
+    environment:
+      - LEDGER_SEED=000000000000000000000000Steward1
+    command: >
+      ./manage start --logs --ip 0.0.0.0
+    networks:
+      - aries-network
+
+  # ACA-Py agent - using pre-built image
+  aries-agent:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.5
+    ports:
+      - "8031:8031"
+      - "8030:8030"
+    command: >
+      start
+        --admin 0.0.0.0 8031
+        --admin-api-key adminkey
+        --endpoint http://aries-agent:8030
+        --inbound-transport http 0.0.0.0 8030
+        --outbound-transport http
+        --label "Academic Credentials Issuer"
+        --auto-accept-invites
+        --auto-accept-requests
+        --wallet-type indy
+        --wallet-name issuer_wallet
+        --wallet-key issuer_key
+        --wallet-storage-type postgres_storage
+        --wallet-storage-config '{"url":"wallet-db:5432","max_connections":5}'
+        --wallet-storage-creds '{"account":"postgres","password":"postgres","admin_account":"postgres","admin_password":"postgres"}'
+        --auto-provision
+        --auto-register
+        --genesis-url http://indy-pool:9000/genesis
+        --seed 000000000000000000000000Steward1
+        --log-level info
+    env_file:
+      - ../backend/.env
+    networks:
+      - aries-network
+    depends_on:
+      - wallet-db
+      - indy-pool
+
+  # Wallet database
+  wallet-db:
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - wallet-db-data:/var/lib/postgresql/data
+    networks:
+      - aries-network
+
+  # Ganache - Ethereum blockchain
+  ganache:
+    image: trufflesuite/ganache:latest
+    ports:
+      - "8545:8545"
+    command: >
+      --chain.hardfork london
+      --chain.chainId 1337
+      --chain.networkId 1337
+      --miner.blockGasLimit 8000000000000
+      --wallet.mnemonic "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat"
+      --server.host 0.0.0.0
+    networks:
+      - aries-network
+
+  # Backend service
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    env_file:
+      - ../backend/.env
+    networks:
+      - aries-network
+    depends_on:
+      - aries-agent
+      - ganache
+    volumes:
+      - ../backend:/app
+      - /app/node_modules
+
+volumes:
+  wallet-db-data:
+
+networks:
+  aries-network:
+    driver: bridge

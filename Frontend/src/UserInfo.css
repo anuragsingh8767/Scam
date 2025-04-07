@@ -1,0 +1,158 @@
+
+.home-container2 {
+  background-image: linear-gradient(to left, #d2caf3, #ffffff);
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.navbar2 {
+  background: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-section2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo2 {
+  height: 24px;
+}
+
+.brand2 {
+  font-weight: bold;
+  color: #030303;
+}
+
+.nav-links2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align links to the left */
+  margin-left: 15px; /* Remove any existing margin */
+  
+}
+
+.nav-links2 a {
+  margin-right: 16px;
+  text-decoration: none;
+  color: #6b7280;
+  font-weight: 500;
+  transition: color 0.3s; /* Smooth transition for hover effect */
+
+}
+
+.nav-links2 .active-link {
+  color: #3b82f6;
+  border-bottom: 2px solid #6696e2;
+}
+
+.user-icon2 {
+  color: #030303;
+}
+
+.content-container2 {
+  display: flex;
+  margin-top: 40px;
+  width: 100vw;
+}
+
+.content-box2 {
+  padding: 32px;
+  width: 100%;
+}
+
+.title2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.welcome2 {
+  color: #6366f1;
+  font-weight: 600;
+}
+
+.profile-section2 {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.profile-pic2 {
+  height: 64px;
+  width: 64px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+
+.profile-name2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.registration2 {
+  margin-top: 8px;
+  color: #6b7280;
+}
+
+.reg-number2 {
+  background: #e5e7eb;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.degree-title2 {
+  margin-top: 24px;
+  color: #9333ea;
+  font-weight: 600;
+}
+
+.degree-info2 {
+  margin-top: 4px;
+  color: #374151;
+}
+
+
+
+.Centerlogo{
+  width: 90%;
+  height: 100%;
+  z-index: 1;
+  padding-left: 25px;
+}
+
+.tab-container {
+  margin-bottom: 40px;
+}
+
+.tab{
+  cursor: pointer;
+  padding: 10px 0;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  display: inline-block;
+  margin-right: 37.8px; /* Set margin to approximately 1 cm */
+  text-decoration: none;
+}
+
+.tab.active {
+  position: relative;
+}
+
+.tab.active {
+  color: #ab34f0; 
+  border-bottom: none;
+}
+.tab.active::after {
+  content: none;
+}
+
+.tab:hover {
+  color: #666; /* Optional: Add a hover effect */
+}
